@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer:
 // 
-// Create Date: 01/06/2026 10:58:23 AM
+// Create Date: 01/06/2026 10:20:40 PM
 // Design Name: 
-// Module Name: Line_Buffer
+// Module Name: line_buffer
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module linebuffer(
+module line_buffer(
     input i_clk,
     input i_rst,
     input [7:0] i_data,
@@ -66,3 +66,4 @@ begin
 end
 
 endmodule
+

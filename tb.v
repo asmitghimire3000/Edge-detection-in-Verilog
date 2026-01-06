@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 01/06/2026 09:34:22 PM
+// Create Date: 01/06/2026 11:13:25 PM
 // Design Name: 
 // Module Name: tb
 // Project Name: 
@@ -19,15 +19,13 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
 `define headerSize 1080
 `define imageSize 512*512
 
 module tb(
 
     );
-    
- 
+
  reg clk;
  reg reset;
  reg [7:0] imgData;
@@ -57,21 +55,21 @@ module tb(
     reset = 1;
     #100;
     file = $fopen("lena_gray.bmp","rb");
-    file1 = $fopen("blurred_lena.bmp","wb");
+    file1 = $fopen("blurred_lena2.bmp","wb");
     for(i=0;i<`headerSize;i=i+1)
     begin
         $fscanf(file,"%c",imgData);
         $fwrite(file1,"%c",imgData);
     end
     
-    for(i=0;i<4*512;i=i+1)
+    for(i=0;i<3*512;i=i+1)
     begin
         @(posedge clk);
         $fscanf(file,"%c",imgData);
         imgDataValid <= 1'b1;
     end
     
-    sentSize = 4*512;
+    sentSize = 3*512;
     
     @(posedge clk);
     imgDataValid <= 1'b0;
@@ -127,11 +125,11 @@ module tb(
  
  TOP_VIEW dut(
     .axi_clk(clk),
-    .axi_reset_n(reset),
+    .axi_rst_n(reset),
     //slave interface
     .i_data_valid(imgDataValid),
     .i_data(imgData),
-    .o_data_ready(),
+    .o_data_ready(1'b1),
     //master interface
     .o_data_valid(outDataValid),
     .o_data(outData),

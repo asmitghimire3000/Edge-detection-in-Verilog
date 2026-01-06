@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 01/06/2026 11:28:52 AM
+// Create Date: 01/06/2026 10:22:23 PM
 // Design Name: 
-// Module Name: Convolution
+// Module Name: convolution
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Convolution(
+module convolution(
     input i_clk,
     input [71:0] i_pixel_data,
     input i_pixel_data_valid,

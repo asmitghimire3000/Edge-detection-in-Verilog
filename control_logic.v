@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 01/06/2026 01:19:57 PM
+// Create Date: 01/06/2026 10:23:28 PM
 // Design Name: 
-// Module Name: Control_logic
+// Module Name: control_logic
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Control_logic(
+module control_logic(
         input i_clk,
         input i_rst,
         input [7:0] i_pixel_data,
@@ -205,7 +205,7 @@ module Control_logic(
     end
 
     // Create four line buffers so that it can prefetch the fourth line while processing the first three lines.
-    linebuffer lB0(
+    line_buffer lB0(
     .i_clk(i_clk),
     .i_rst(i_rst),
     .i_data(i_pixel_data),
@@ -214,7 +214,7 @@ module Control_logic(
     .i_rd_data(linebuff_rd_data[0])
     );
 
-    linebuffer lB1(
+    line_buffer lB1(
         .i_clk(i_clk),
         .i_rst(i_rst),
         .i_data(i_pixel_data),
@@ -223,7 +223,7 @@ module Control_logic(
         .i_rd_data(linebuff_rd_data[1])
     );
 
-    linebuffer lB2(
+    line_buffer lB2(
         .i_clk(i_clk),
         .i_rst(i_rst),
         .i_data(i_pixel_data),
@@ -232,7 +232,7 @@ module Control_logic(
         .i_rd_data(linebuff_rd_data[2])
     );
 
-    linebuffer lB3(
+    line_buffer lB3(
         .i_clk(i_clk),
         .i_rst(i_rst),
         .i_data(i_pixel_data),

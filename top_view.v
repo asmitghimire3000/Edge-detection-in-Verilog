@@ -19,7 +19,6 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
 module TOP_VIEW(
     input axi_clk,
     input axi_rst_n,
@@ -48,7 +47,7 @@ module TOP_VIEW(
 
     control_logic control_logic_inst(
         .i_clk(axi_clk),
-        .i_rst_n(!axi_rst_n),
+        .i_rst(!axi_rst_n),
         .i_pixel_data(i_data),
         .i_pixel_data_valid(i_data_valid),
         .o_pixel_data(pixel_data),
@@ -56,7 +55,7 @@ module TOP_VIEW(
         .o_intr(o_intr)
     );
 
-    Convolution convolution_inst(
+    convolution convolution_inst(
         .i_clk(axi_clk),
         .i_pixel_data(pixel_data),
         .i_pixel_data_valid(pixel_data_valid),
@@ -64,7 +63,9 @@ module TOP_VIEW(
         .convolved_data_ready(convolved_data_ready)
         );
         
-   outputBuffer output_buffer (
+   outputBuffer output_buffer(
+      .wr_rst_busy(),        // output wire wr_rst_busy
+      .rd_rst_busy(),
       .s_aclk(axi_clk),                  // input wire s_aclk
       .s_aresetn(axi_rst_n),            // input wire s_aresetn
       .s_axis_tvalid(convolved_data_ready),    // input wire s_axis_tvalid
@@ -75,9 +76,6 @@ module TOP_VIEW(
       .m_axis_tdata(o_data),      // output wire [7 : 0] m_axis_tdata
       .axis_prog_full(axis_prog_full)  // output wire axis_prog_full
    );
-    
-    
-    
 endmodule
 
 
