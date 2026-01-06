@@ -4,7 +4,6 @@ module linebuffer(
     input [7:0] i_data,
     input i_valid,
     output [23:0] o_data,
-    output o_valid
     input i_rd_data
 );
 

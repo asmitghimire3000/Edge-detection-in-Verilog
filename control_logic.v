@@ -26,7 +26,8 @@ module Control_logic(
         input [7:0] i_pixel_data,
         input i_pixel_data_valid,
         output reg [71:0] o_pixel_data,
-        output reg o_pixel_data_valid
+        output o_pixel_data_valid,
+        output reg o_intr
     );
     reg [8:0] pixel_counter; // 9 bit cause 111111111 = 511, and we will get 512 when we and it with i_pixel_data_valid 
     reg [8:0] rd_counter;
@@ -65,14 +66,17 @@ module Control_logic(
         begin
             rdState <= IDLE;
             rd_line_buffer <= 0;
+            o_intr <= 1'b0;
         end
         else
         begin
             case (rdState)
                 IDLE:
                 begin
+                    o_intr <= 1'b0;
                     if(total_pixel_counter >= 1536) //512*3 = 1536
-                    begin 
+                    begin
+                         
                         rd_line_buffer <= 1;
                         rdState <= RD_BUFFER;
                     end
@@ -84,6 +88,7 @@ module Control_logic(
                     begin
                         rdState <= IDLE;
                         rd_line_buffer <= 1'b0;
+                        o_intr <= 1'b1;
                     end
                 end
             endcase
@@ -206,7 +211,6 @@ module Control_logic(
     .i_data(i_pixel_data),
     .i_valid(lineBuffDataValid[0]),
     .o_data(lb0data),
-    .o_valid(),
     .i_rd_data(linebuff_rd_data[0])
     );
 
@@ -216,7 +220,6 @@ module Control_logic(
         .i_data(i_pixel_data),
         .i_valid(lineBuffDataValid[1]),
         .o_data(lb1data),
-        .o_valid(),
         .i_rd_data(linebuff_rd_data[1])
     );
 
@@ -226,7 +229,6 @@ module Control_logic(
         .i_data(i_pixel_data),
         .i_valid(lineBuffDataValid[2]),
         .o_data(lb2data),
-        .o_valid(),
         .i_rd_data(linebuff_rd_data[2])
     );
 
@@ -236,48 +238,8 @@ module Control_logic(
         .i_data(i_pixel_data),
         .i_valid(lineBuffDataValid[3]),
         .o_data(lb3data),
-        .o_valid(),
         .i_rd_data(linebuff_rd_data[3])
     );
 
 
 endmodule
-
-
-/*
-
-i_pixel_data_valid (1-bit)
-   ↓
-pixel_counter [8:0] (max 511)
-   ↓  (when == 511)
-currentWrLineBuffer [1:0] (max 3)
-   ↓
-lineBuffDataValid [3:0] (one-hot)
-   ↓
-Line Buffers LB0–LB3
-   │   (each stores 512 × 8-bit pixels)
-   ▼
-
-i_pixel_data_valid (1-bit)            rd_line_buffer (1-bit)
-        │                                     │
-        └──────────────┬──────────────────────┘
-                       ▼
-total_pixel_counter [11:0] (max 2047)
-   ↓  (>= 1536 → start read)
-rdState [0:0] (IDLE / RD_BUFFER)
-   ↓
-rd_line_buffer (1-bit)
-   ↓
-rd_counter [8:0] (max 511)
-   ↓  (when == 511)
-currentRdLineBuffer [1:0] (max 3)
-   ↓
-linebuff_rd_data [3:0] (3-of-4 enable mask)
-   ↓
-Line Buffers LB0–LB3 (read)
-   ↓
-lb0data, lb1data, lb2data, lb3data [23:0] each
-   ↓
-o_pixel_data [71:0] (3 × 24-bit pixels)
-
-*/
