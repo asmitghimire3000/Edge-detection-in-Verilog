@@ -242,3 +242,42 @@ module Control_logic(
 
 
 endmodule
+
+
+/*
+
+i_pixel_data_valid (1-bit)
+   ↓
+pixel_counter [8:0] (max 511)
+   ↓  (when == 511)
+currentWrLineBuffer [1:0] (max 3)
+   ↓
+lineBuffDataValid [3:0] (one-hot)
+   ↓
+Line Buffers LB0–LB3
+   │   (each stores 512 × 8-bit pixels)
+   ▼
+
+i_pixel_data_valid (1-bit)            rd_line_buffer (1-bit)
+        │                                     │
+        └──────────────┬──────────────────────┘
+                       ▼
+total_pixel_counter [11:0] (max 2047)
+   ↓  (>= 1536 → start read)
+rdState [0:0] (IDLE / RD_BUFFER)
+   ↓
+rd_line_buffer (1-bit)
+   ↓
+rd_counter [8:0] (max 511)
+   ↓  (when == 511)
+currentRdLineBuffer [1:0] (max 3)
+   ↓
+linebuff_rd_data [3:0] (3-of-4 enable mask)
+   ↓
+Line Buffers LB0–LB3 (read)
+   ↓
+lb0data, lb1data, lb2data, lb3data [23:0] each
+   ↓
+o_pixel_data [71:0] (3 × 24-bit pixels)
+
+*/
