@@ -1,3 +1,25 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 01/06/2026 10:58:23 AM
+// Design Name: 
+// Module Name: Line_Buffer
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
 module linebuffer(
     input i_clk,
     input i_rst,
@@ -36,7 +58,6 @@ assign o_data = {line[read_ptr], line[read_ptr + 1], line[read_ptr + 2]};
 always @(posedge i_clk)
 begin
     if (i_rst)
-
         read_ptr <= 'd0;
     else if(i_rd_data)
     begin
