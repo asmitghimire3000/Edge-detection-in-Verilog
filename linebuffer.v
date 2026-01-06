@@ -24,7 +24,7 @@ always @(posedge i_clk)
 begin
     if (i_rst) 
     begin
-        read_ptr <= 'd0;
+        write_ptr <= 'd0;
     end
     else if(i_valid)
     begin
