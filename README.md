@@ -64,7 +64,7 @@ To simulate the design:
 
 1. Place a grayscale BMP image named `lena_gray.bmp` in the simulation directory.
 2. Run the testbench ([tb.v](tb.v)) using your preferred Verilog simulator (e.g., Icarus Verilog, ModelSim).
-3. The processed image will be written as `blurred_lena2.bmp`.
+3. The processed image will be written as `blurred_lena.bmp`.
 
 ## Customization
 
