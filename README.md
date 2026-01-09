@@ -76,9 +76,9 @@ To simulate the design:
 - Verilog 2001 compatible simulator
 - BMP image for testing (grayscale, 512x512 pixels)
 
-## License
+## Demo
 
-This project is provided for educational and research purposes.
+![Lena Gray image](images/lena_gray.bmp)
 
----
-                
+![Edge Detected](images/edge_lena.bmp)
+
